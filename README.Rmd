@@ -2,7 +2,7 @@
 title: "Introduction to R for Data Science (FutureLearn)"
 author: "Graeme West"
 date: "13/03/2019"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
