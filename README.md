@@ -28,6 +28,6 @@ download.file("http://stat-computing.org/dataexpo/2009/2008.csv.bz2",destfile="d
 # Week Index
 
 1.  [Week 1 (Introduction, setup, EDA, basic
-    plotting)](Intro_to_R_Week_1.Rmd)
+    plotting)](Intro_to_R_Week_1.md)
 
 **FURTHER WEEKS - TBD**
