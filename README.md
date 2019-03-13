@@ -29,5 +29,6 @@ download.file("http://stat-computing.org/dataexpo/2009/2008.csv.bz2",destfile="d
 
 1.  [Week 1 (Introduction, setup, EDA, basic
     plotting)](Intro_to_R_Week_1.md)
+2.  [Week 2](Intro_to_R_Week_2.md)
 
 **FURTHER WEEKS - TBD**
