@@ -1,0 +1,141 @@
+---
+title: "Intro to R - Week 1"
+output:
+  html_document:
+    df_print: paged
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Introduction to R for Data Science (FutureLearn) - Week 1
+
+By Graeme West
+
+This notebook covers the material in Week 1 of [Introduction to R for Data Science](https://www.futurelearn.com/courses/data-science/5) by Purdue University on FutureLearn.
+
+The subject matter of the data is airline flight data from the United States. Week 1 covers basic setup, exploratory data analysis, selecting data, and basic plotting.
+
+## Step 1.12
+
+Read in the basic 2008 data (this takes a couple of minutes):
+```{r}
+myDF <- read.csv("./datasets/2008.csv.bz2")
+```
+
+
+Phew, that was tough! Let's try and make heads and tails of it...
+```{r}
+head(myDF)
+```
+
+```{r}
+tail(myDF)
+```
+
+## Step 1.13: Looking at only Indianapolis flights
+
+First let's look at the top of the 'Origin' column.
+
+```{r}
+head(myDF$Origin)
+```
+And the tail:
+```{r}
+tail(myDF$Origin)
+```
+
+Let's also check the 'dest' column:
+```{r}
+head(myDF$Dest)
+```
+
+```{r}
+tail(myDF$Dest)
+```
+
+
+## Step 1.15: Identifying Properties
+
+Let's slice by origin to identify flights that began in Indianapolis:
+
+```{r}
+head(myDF$Origin == "IND")
+```
+Okay, so that returned a series of Booleans. Let's get the total number by doing a 'sum':
+
+```{r}
+sum(myDF$Origin == "IND")
+```
+Let's count the flights that were destined to Indianapolis:
+```{r}
+sum(myDF$Dest == "IND")
+```
+
+## Step 1.17: Extracting Flight Data with a Common City of Origin
+
+Make a new DataFrame with the entries from the total data where the origin airport was Indianapolis:
+```{r}
+MyIndyOrigins <- subset(myDF, myDF$Origin == "IND")
+head(MyIndyOrigins)
+```
+
+Let's do the same for the flights that were destined for Indianapolis:
+```{r}
+IndianapolisDestinations <- subset(myDF, myDF$Dest == "IND")
+head(IndianapolisDestinations)
+```
+
+How would we determine which flights departed in a particular month? We'll try a table first.
+
+```{r}
+table(MyIndyOrigins$Month)
+```
+
+And now a table:
+```{r}
+plot(table(MyIndyOrigins$Month))
+```
+
+Now the same for destinations:
+```{r}
+plot(table(IndianapolisDestinations$Month))
+```
+
+## Step 1.19: Analyzing the Departure Times of Flights
+
+Let's look at the flights with departure times before 6AM:
+
+```{r}
+sum(MyIndyOrigins$DepTime < 600)
+```
+This causes an issue because some value are NaNs. We'll set the `na.rm` parameter to drop these from the calculation:
+```{r}
+sum(MyIndyOrigins$DepTime < 600, na.rm=TRUE)
+```
+
+Let's count the 'NaN' values in the `DepTime` column:
+```{r}
+sum(is.na(MyIndyOrigins$DepTime))
+```
+
+## Step 1.21 Annotating R Code with Comments
+
+"Make a plot of departure times, grouped by hour, for the flights from ATL to LAX.":
+
+```{r}
+atllaxflights <- myDF[ which(myDF$Origin == "ATL" & myDF$Dest == "LAX"), ]
+head(atllaxflights)
+```
+I noticed that there are several NA entries in the DepTime column for this DataFrame. So let's drop those, then group it by hour:
+```{r}
+atllaxflights_clean <- na.omit(atllaxflights, cols="DepTime")
+atllaxflights_clean$timestamp <- strptime(sprintf("%04d", atllaxflights_clean$DepTime), format="%H%M")
+atllaxflights_clean$depHour <- as.numeric(format(atllaxflights_clean$timestamp, format="%H"))
+head(atllaxflights_clean, 250)
+```
+
+Now, let's generate a plot of these, grouped by hour:
+```{r}
+hist(atllaxflights_clean$depHour, main="ATL to LAX Flights by Hour of Day, 2008", xlab="Hour of Day", ylab="Number of Flights", border="blue")
+```
+
