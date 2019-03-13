@@ -130,7 +130,7 @@ I noticed that there are several NA entries in the DepTime column for this DataF
 atllaxflights_clean <- na.omit(atllaxflights, cols="DepTime")
 atllaxflights_clean$timestamp <- strptime(sprintf("%04d", atllaxflights_clean$DepTime), format="%H%M")
 atllaxflights_clean$depHour <- as.numeric(format(atllaxflights_clean$timestamp, format="%H"))
-head(atllaxflights_clean, 250)
+head(atllaxflights_clean, 10)
 ```
 
 Now, let's generate a plot of these, grouped by hour:
