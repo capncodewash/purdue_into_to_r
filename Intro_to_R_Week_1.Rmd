@@ -1,12 +1,11 @@
 ---
-title: "Intro to R - Week 1"
+title: "Introduction to R for Data Science (FutureLearn) - Week 1"
 output:
   output: github_document
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-# Introduction to R for Data Science (FutureLearn) - Week 1
 
 By Graeme West
 

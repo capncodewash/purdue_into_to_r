@@ -1,7 +1,5 @@
-Intro to R - Week 1
+Introduction to R for Data Science (FutureLearn) - Week 1
 ================
-
-# Introduction to R for Data Science (FutureLearn) - Week 1
 
 By Graeme West
 
